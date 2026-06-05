@@ -38,19 +38,6 @@ class ChatController extends Controller
         $message = strip_tags($validated['message']);
         $message = htmlspecialchars($message, ENT_QUOTES, 'UTF-8');
 
-        // Простое кеширование для одинаковых вопросов
-        $cacheKey = 'chat:' . md5($message);
-        $cached = cache()->get($cacheKey);
-        
-        if ($cached && !$validated['parent_message_id']) {
-            return response()->json([
-                'success' => true,
-                'message' => $cached['message'],
-                'id' => $cached['id'],
-                'cached' => true
-            ]);
-        }
-
         $agentId = config('timeweb.agent_id');
         $token = config('timeweb.api_token');
         $apiUrl = config('timeweb.api_url');
@@ -65,9 +52,9 @@ class ChatController extends Controller
         }
 
         try {
-            $response = Http::timeout(60) // Увеличен с 30 до 60 секунд
-                ->connectTimeout(10) // Таймаут подключения
-                ->retry(3, 100) // 3 попытки с задержкой 100мс
+            $response = Http::timeout(60) 
+                ->connectTimeout(10)
+                ->retry(3, 100) 
                 ->withHeaders([
                     'Authorization' => 'Bearer ' . $token,
                     'Content-Type' => 'application/json',
@@ -83,14 +70,6 @@ class ChatController extends Controller
                 // Санитизация ответа
                 $responseMessage = $data['message'] ?? 'Нет ответа';
                 $responseMessage = htmlspecialchars($responseMessage, ENT_QUOTES, 'UTF-8');
-                
-                // Кешируем ответ на 1 час
-                if (!$validated['parent_message_id']) {
-                    cache()->put($cacheKey, [
-                        'message' => $responseMessage,
-                        'id' => $data['id'] ?? null
-                    ], 3600);
-                }
                 
                 return response()->json([
                     'success' => true,
@@ -118,17 +97,9 @@ class ChatController extends Controller
                 'ip' => $request->ip()
             ]);
             
-            // Более понятное сообщение для пользователя
-            $errorMessage = 'AI временно недоступен. Попробуйте через минуту.';
-            
-            // Если timeout - специальное сообщение
-            if (str_contains($e->getMessage(), 'timed out')) {
-                $errorMessage = 'AI долго отвечает. Попробуйте упростить вопрос или подождите минуту.';
-            }
-            
             return response()->json([
                 'success' => false,
-                'error' => $errorMessage
+                'error' => 'AI модель перегружена. Попробуйте через 1-2 минуты или обратитесь к администратору.'
             ], 503);
         }
     }
