@@ -20,6 +20,11 @@ class SecurityHeaders
         $response->headers->set('X-XSS-Protection', '1; mode=block');
         $response->headers->set('Referrer-Policy', 'strict-origin-when-cross-origin');
         $response->headers->set('Permissions-Policy', 'geolocation=(), microphone=(), camera=()');
+        $response->headers->set('Access-Control-Allow-Origin', '*');
+        $response->headers->set('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+        $response->headers->set('Access-Control-Allow-Headers', 'Content-Type, X-CSRF-TOKEN');
+
+
         
         // Content Security Policy
         $response->headers->set('Content-Security-Policy', 
@@ -34,3 +39,4 @@ class SecurityHeaders
         return $response;
     }
 }
+
