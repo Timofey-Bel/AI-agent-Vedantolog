@@ -16,14 +16,14 @@
     <meta property="og:url" content="https://ai.vedantolog.org">
     <meta property="og:title" content="Vedantolog AI - Ведический AI Помощник">
     <meta property="og:description" content="Получите ответы на вопросы о ведической астрологии, карме и духовном развитии от AI-консультанта">
-    <meta property="og:image" content="{{ asset('vedantolog-dark-Photoroom.png') }}">
+    <meta property="og:image" content="{{ asset('vedantolog-icon-white-bg-new.jpg') }}">
     
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
     <meta property="twitter:url" content="https://ai.vedantolog.org">
     <meta property="twitter:title" content="Vedantolog AI - Ведический AI Помощник">
     <meta property="twitter:description" content="Получите ответы на вопросы о ведической астрологии, карме и духовном развитии от AI-консультанта">
-    <meta property="twitter:image" content="{{ asset('vedantolog-dark-Photoroom.png') }}">
+    <meta property="twitter:image" content="{{ asset('vedantolog-icon-white-bg-new.jpg') }}">
     <link rel="icon" type="image/png" href="{{ asset('favicon.png') }}">
     <link rel="shortcut icon" type="image/png" href="{{ asset('favicon.png') }}">
     <link rel="apple-touch-icon" href="{{ asset('favicon.png') }}">
@@ -188,6 +188,7 @@
         .history-item-content {
             padding: 10px 12px;
             padding-right: 36px;
+            border-radius: 8px;
             display: flex;
             align-items: center;
             gap: 8px;
@@ -211,7 +212,7 @@
 
         .history-item.active .history-item-content {
             background: #2a2a2a;
-            color: #00bcd4;
+            color: rgb(0 144 216);
             font-weight: 500;
         }
 
@@ -506,6 +507,57 @@
             color: #ff4444;
         }
 
+        .message-actions {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 10px;
+            opacity: 0.55;
+            transition: opacity 0.2s;
+        }
+
+        .message-group.bot:hover .message-actions {
+            opacity: 1;
+        }
+
+        .copy-btn {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 10px;
+            background: transparent;
+            border: 1px solid #2a2a2a;
+            border-radius: 6px;
+            color: #999;
+            font-size: 12px;
+            font-family: inherit;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .copy-btn:hover {
+            background: #2a2a2a;
+            border-color: rgb(0 144 216);
+            color: rgb(0 144 216);
+        }
+
+        .copy-btn svg {
+            width: 14px;
+            height: 14px;
+            flex-shrink: 0;
+        }
+
+        .copy-btn.copied {
+            color: #00e676;
+            border-color: #00e676;
+        }
+
+        @media (max-width: 768px) {
+            .message-actions {
+                opacity: 1;
+            }
+        }
+
         .welcome-message {
             text-align: center;
             padding: 80px 20px;
@@ -576,6 +628,28 @@
             color: #666;
         }
 
+        .chat-input textarea::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .chat-input textarea::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .chat-input textarea::-webkit-scrollbar-thumb {
+            background: #2a2a2a;
+            border-radius: 3px;
+        }
+
+        .chat-input textarea::-webkit-scrollbar-thumb:hover {
+            background: #3a3a3a;
+        }
+
+        .chat-input textarea {
+            scrollbar-width: thin;
+            scrollbar-color: #2a2a2a transparent;
+        }
+
         .chat-input button {
             width: 36px;
             height: 36px;
@@ -605,6 +679,144 @@
         .chat-input button svg {
             width: 20px;
             height: 20px;
+        }
+
+        .attach-btn {
+            background: transparent !important;
+            color: #999 !important;
+            border: 1px solid #2a2a2a !important;
+        }
+
+        .attach-btn:hover:not(:disabled) {
+            color: rgb(0 144 216) !important;
+            border-color: rgb(0 144 216) !important;
+            box-shadow: none !important;
+        }
+
+        .attachments-preview {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 10px;
+        }
+
+        .attachments-preview:empty {
+            display: none;
+        }
+
+        .attachment-chip {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            max-width: 240px;
+            padding: 8px 10px;
+            background: #0a0a0a;
+            border: 1px solid #2a2a2a;
+            border-radius: 10px;
+            position: relative;
+        }
+
+        .attachment-chip .att-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 6px;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #1a1a1a;
+            color: rgb(0 144 216);
+            overflow: hidden;
+        }
+
+        .attachment-chip .att-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .attachment-chip .att-icon svg {
+            width: 18px;
+            height: 18px;
+        }
+
+        .attachment-chip .att-info {
+            min-width: 0;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .attachment-chip .att-name {
+            font-size: 13px;
+            color: #e0e0e0;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .attachment-chip .att-meta {
+            font-size: 11px;
+            color: #666;
+        }
+
+        .attachment-chip .att-meta.warn {
+            color: #d9a441;
+        }
+
+        .attachment-chip .att-remove {
+            width: 20px;
+            height: 20px;
+            flex-shrink: 0;
+            border: none;
+            background: #2a2a2a;
+            color: #ccc;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            line-height: 1;
+            transition: all 0.2s;
+        }
+
+        .attachment-chip .att-remove:hover {
+            background: #ff4444;
+            color: #fff;
+        }
+
+        .message-attachments {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 10px;
+        }
+
+        .message-attachments .msg-att {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 10px;
+            background: #1a1a1a;
+            border: 1px solid #2a2a2a;
+            border-radius: 8px;
+            font-size: 13px;
+            color: #cfcfcf;
+        }
+
+        .message-attachments .msg-att svg {
+            width: 16px;
+            height: 16px;
+            color: rgb(0 144 216);
+            flex-shrink: 0;
+        }
+
+        .message-attachments img.msg-att-img {
+            max-width: 180px;
+            max-height: 180px;
+            border-radius: 10px;
+            border: 1px solid #2a2a2a;
+            object-fit: cover;
         }
 
         .sidebar-toggle {
@@ -772,13 +984,20 @@
             <div class="chat-input-wrapper">
                 <div class="chat-input-container">
                     <form id="chatForm">
+                        <div id="attachmentsPreview" class="attachments-preview"></div>
                         <div class="chat-input">
+                            <input type="file" id="fileInput" multiple hidden
+                                   accept=".pdf,.docx,.txt,.md,.csv,.log,.json,.html,.xml,.js,.ts,.css,.php,.py,.rtf,.yml,.yaml,.ini">
+                            <button type="button" id="attachBtn" class="attach-btn" title="Прикрепить документ">
+                                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13"/>
+                                </svg>
+                            </button>
                             <textarea 
                                 id="userInput" 
                                 placeholder="Напишите ваш вопрос..." 
                                 rows="1"
                                 autocomplete="off"
-                                required
                             ></textarea>
                             <button type="submit" id="sendBtn">
                                 <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -792,13 +1011,24 @@
         </div>
     </div>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mammoth@1.6.0/mammoth.browser.min.js"></script>
     <script>
+        // Настройка воркера pdf.js (используется для извлечения текста из PDF)
+        if (window.pdfjsLib) {
+            window.pdfjsLib.GlobalWorkerOptions.workerSrc =
+                'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+        }
+
         const messagesEl = document.getElementById('messages');
         const form = document.getElementById('chatForm');
         const input = document.getElementById('userInput');
         const sendBtn = document.getElementById('sendBtn');
         const historyList = document.getElementById('historyList');
-        
+        const fileInput = document.getElementById('fileInput');
+        const attachBtn = document.getElementById('attachBtn');
+        const attachmentsPreview = document.getElementById('attachmentsPreview');
+
         const csrfToken = document.querySelector('meta[name="csrf-token"]').content;
         let lastMessageId = null;
         let currentConversationId = null;
@@ -817,7 +1047,9 @@
                 welcomeText: 'Vedantolog AI — это первый в мире комплекс моделей искусственного интеллекта, которые обучаются под руководством опытных экспертов в области ведического знания. Его миссия — сделать так, чтобы каждый искренний искатель истины мог получить доступ к полному объёму ведического знания и его носителям',
                 placeholder: 'Напишите ваш вопрос...',
                 typing: 'Печатаю ответ...',
-                you: 'Вы'
+                you: 'Вы',
+                copy: 'Копировать',
+                copied: 'Скопировано'
             },
             en: {
                 home: 'Home',
@@ -830,7 +1062,9 @@
                 welcomeText: 'Vedantolog AI — the world first complex of artificial intelligence models trained by experienced experts in Vedic knowledge. Its mission is to ensure that every sincere seeker of truth has access to the full body of Vedic knowledge and its bearers.',
                 placeholder: 'Write your question...',
                 typing: 'Typing response...',
-                you: 'You'
+                you: 'You',
+                copy: 'Copy',
+                copied: 'Copied'
             }
         };
 
@@ -843,12 +1077,436 @@
             this.style.height = Math.min(this.scrollHeight, 200) + 'px';
         });
 
+        // ===== Вложения (фото и документы) =====
+        const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10 МБ на файл
+        const MAX_FILES = 5;
+        const MAX_TEXT_CHARS = 15000; // лимит извлекаемого текста на один документ
+        let attachedFiles = [];
+
+        const TEXT_EXT = ['txt', 'md', 'csv', 'log', 'json', 'html', 'xml', 'js', 'ts', 'css', 'php', 'py', 'rtf', 'yml', 'yaml', 'ini'];
+
+        function fileExt(name) {
+            const i = name.lastIndexOf('.');
+            return i >= 0 ? name.slice(i + 1).toLowerCase() : '';
+        }
+
+        function isPdf(file) {
+            return file.type === 'application/pdf' || fileExt(file.name) === 'pdf';
+        }
+
+        function isDocx(file) {
+            return file.type === 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
+                || fileExt(file.name) === 'docx';
+        }
+
+        function isTextual(file) {
+            return (file.type && file.type.startsWith('text/'))
+                || file.type === 'application/json'
+                || TEXT_EXT.includes(fileExt(file.name));
+        }
+
+        function formatSize(bytes) {
+            if (bytes < 1024) return bytes + ' B';
+            if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(0) + ' KB';
+            return (bytes / 1024 / 1024).toFixed(1) + ' MB';
+        }
+
+        function readAsText(file) {
+            return new Promise((resolve, reject) => {
+                const r = new FileReader();
+                r.onload = () => resolve(r.result);
+                r.onerror = reject;
+                r.readAsText(file);
+            });
+        }
+
+        function readAsDataURL(file) {
+            return new Promise((resolve, reject) => {
+                const r = new FileReader();
+                r.onload = () => resolve(r.result);
+                r.onerror = reject;
+                r.readAsDataURL(file);
+            });
+        }
+
+        async function extractPdfText(file) {
+            if (!window.pdfjsLib) throw new Error('pdfjs not loaded');
+            const buf = await file.arrayBuffer();
+            const pdf = await window.pdfjsLib.getDocument({ data: buf }).promise;
+            const pages = Math.min(pdf.numPages, 30);
+            let txt = '';
+            for (let i = 1; i <= pages; i++) {
+                const page = await pdf.getPage(i);
+                const content = await page.getTextContent();
+                txt += content.items.map(it => it.str).join(' ') + '\n';
+            }
+            return txt.trim();
+        }
+
+        // Извлечение текста из .docx (Word) — локально через mammoth.js.
+        // Используем convertToHtml, чтобы сохранить структуру (списки, абзацы, заголовки).
+        async function extractDocxText(file) {
+            await ensureMammoth();
+            const arrayBuffer = await file.arrayBuffer();
+            const result = await window.mammoth.convertToHtml({ arrayBuffer });
+            return htmlToPlainText(result && result.value ? result.value : '');
+        }
+
+        // Преобразует HTML в читаемый текст, сохраняя списки, нумерацию и переносы строк
+        function htmlToPlainText(html) {
+            const root = document.createElement('div');
+            root.innerHTML = html;
+
+            function render(node) {
+                let out = '';
+                node.childNodes.forEach(child => {
+                    if (child.nodeType === 3) { // текстовый узел
+                        out += child.textContent;
+                    } else if (child.nodeType === 1) { // элемент
+                        const tag = child.tagName.toLowerCase();
+                        if (tag === 'br') {
+                            out += '\n';
+                        } else if (tag === 'ol') {
+                            let i = 1;
+                            child.querySelectorAll(':scope > li').forEach(li => {
+                                out += '\n' + (i++) + '. ' + render(li).trim();
+                            });
+                            out += '\n';
+                        } else if (tag === 'ul') {
+                            child.querySelectorAll(':scope > li').forEach(li => {
+                                out += '\n• ' + render(li).trim();
+                            });
+                            out += '\n';
+                        } else if (/^(p|div|h[1-6]|tr|section|article)$/.test(tag)) {
+                            out += '\n' + render(child).trim() + '\n';
+                        } else if (tag === 'td' || tag === 'th') {
+                            out += render(child).trim() + '\t';
+                        } else {
+                            out += render(child);
+                        }
+                    }
+                });
+                return out;
+            }
+
+            let text = render(root);
+            text = text.replace(/[ \t]+\n/g, '\n')   // пробелы перед переносом
+                       .replace(/\n{3,}/g, '\n\n')   // не более одной пустой строки
+                       .replace(/[ \t]{2,}/g, ' ')   // схлопываем двойные пробелы
+                       .trim();
+            return text;
+        }
+
+        // Динамическая подгрузка скрипта
+        function loadScript(src) {
+            return new Promise((resolve, reject) => {
+                const s = document.createElement('script');
+                s.src = src;
+                s.onload = () => resolve();
+                s.onerror = () => reject(new Error('failed to load ' + src));
+                document.head.appendChild(s);
+            });
+        }
+
+        // Гарантирует, что mammoth загружен (с запасными источниками)
+        async function ensureMammoth() {
+            if (window.mammoth) return;
+            const sources = [
+                'https://cdn.jsdelivr.net/npm/mammoth@1.6.0/mammoth.browser.min.js',
+                'https://unpkg.com/mammoth@1.6.0/mammoth.browser.min.js',
+                'https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js'
+            ];
+            for (const url of sources) {
+                try {
+                    await loadScript(url);
+                    if (window.mammoth) return;
+                } catch (e) {
+                    console.warn('mammoth: не удалось загрузить', url);
+                }
+            }
+            throw new Error('mammoth not loaded');
+        }
+
+        attachBtn.addEventListener('click', () => fileInput.click());
+        fileInput.addEventListener('change', (e) => handleFiles(e.target.files));
+
+        async function handleFiles(fileList) {
+            for (const file of Array.from(fileList)) {
+                if (attachedFiles.length >= MAX_FILES) {
+                    alert('Можно прикрепить не более ' + MAX_FILES + ' файлов.');
+                    break;
+                }
+                if (file.size > MAX_FILE_SIZE) {
+                    alert('Файл "' + file.name + '" слишком большой (макс. 10 МБ).');
+                    continue;
+                }
+
+                // Разрешаем только то, что бот реально может прочитать
+                if (!(isPdf(file) || isDocx(file) || isTextual(file))) {
+                    alert('Файл «' + file.name + '» не поддерживается.\nМожно прикреплять документы (PDF, DOCX) и текстовые файлы. ' +
+                          'Изображения и другие форматы бот прочитать не может.');
+                    continue;
+                }
+
+                const item = {
+                    id: Date.now() + '_' + Math.random().toString(36).slice(2),
+                    name: file.name,
+                    size: file.size,
+                    kind: 'other',
+                    text: null,
+                    dataUrl: null,
+                    warn: false,
+                    processing: false
+                };
+
+                attachedFiles.push(item);
+                // Обработку запускаем асинхронно, чтобы чип появился сразу
+                processFile(item, file);
+                renderAttachments();
+            }
+            fileInput.value = '';
+        }
+
+        async function processFile(item, file) {
+            try {
+                if (isPdf(file)) {
+                    item.kind = 'pdf';
+                    item.processing = true;
+                    renderAttachments();
+                    item.text = await extractPdfText(file);
+                    item.processing = false;
+                    if (!item.text) item.warn = true;
+                } else if (isDocx(file)) {
+                    item.kind = 'doc';
+                    item.processing = true;
+                    renderAttachments();
+                    item.text = await extractDocxText(file);
+                    item.processing = false;
+                    if (!item.text) item.warn = true;
+                } else if (isTextual(file)) {
+                    item.kind = 'text';
+                    item.text = await readAsText(file);
+                } else {
+                    item.kind = 'other';
+                    item.warn = true; // формат не читается как текст (например, docx/xlsx)
+                }
+            } catch (err) {
+                item.processing = false;
+                item.warn = true;
+                console.error('Не удалось обработать файл', file.name, err);
+            }
+
+            if (item.text && item.text.length > MAX_TEXT_CHARS) {
+                item.text = item.text.slice(0, MAX_TEXT_CHARS) + '\n…(текст обрезан)';
+            }
+            renderAttachments();
+        }
+
+        function removeAttachment(id) {
+            attachedFiles = attachedFiles.filter(f => f.id !== id);
+            renderAttachments();
+        }
+
+        function fileIconSvg() {
+            return '<svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8l-6-6z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" d="M14 2v6h6"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" d="M9 13h6M9 17h6"/></svg>';
+        }
+
+        function renderAttachments() {
+            attachmentsPreview.innerHTML = '';
+            attachedFiles.forEach(f => {
+                const chip = document.createElement('div');
+                chip.className = 'attachment-chip';
+
+                const icon = document.createElement('div');
+                icon.className = 'att-icon';
+                if (f.kind === 'image' && f.dataUrl) {
+                    icon.innerHTML = '<img src="' + f.dataUrl + '" alt="">';
+                } else {
+                    icon.innerHTML = fileIconSvg();
+                }
+
+                const info = document.createElement('div');
+                info.className = 'att-info';
+                const name = document.createElement('div');
+                name.className = 'att-name';
+                name.textContent = f.name;
+                const meta = document.createElement('div');
+                meta.className = 'att-meta' + (f.warn ? ' warn' : '');
+                if (f.processing) {
+                    meta.textContent = f.kind === 'image' ? 'распознаётся текст…' : 'обработка…';
+                } else if (f.kind === 'image') {
+                    meta.textContent = f.text ? 'текст распознан' : 'текста не найдено';
+                } else if (f.warn) {
+                    meta.textContent = formatSize(f.size) + ' · текст не извлечён';
+                } else {
+                    meta.textContent = formatSize(f.size) + ' · текст добавлен';
+                }
+                info.appendChild(name);
+                info.appendChild(meta);
+
+                const remove = document.createElement('button');
+                remove.type = 'button';
+                remove.className = 'att-remove';
+                remove.innerHTML = '&times;';
+                remove.title = 'Убрать';
+                remove.addEventListener('click', () => removeAttachment(f.id));
+
+                chip.appendChild(icon);
+                chip.appendChild(info);
+                chip.appendChild(remove);
+                attachmentsPreview.appendChild(chip);
+            });
+        }
+
+        function clearAttachments() {
+            attachedFiles = [];
+            renderAttachments();
+        }
+
+        // Собирает текст для отправки модели: вопрос + содержимое документов + пометки
+        function buildComposedMessage(typedText) {
+            const parts = [];
+
+            const withText = attachedFiles.filter(f => f.text);
+            withText.forEach(f => {
+                const label = f.kind === 'image'
+                    ? 'распознанный текст с изображения'
+                    : 'содержимое прикреплённого файла';
+                parts.push(
+                    'Ниже приведён ' + label + ' «' + f.name + '». ' +
+                    'Используй этот текст как контекст и при необходимости цитируй его, отвечая на вопрос пользователя. ' +
+                    'Если цитируешь — сохраняй исходное форматирование: списки, нумерацию, переносы строк и пробелы как в оригинале.\n' +
+                    '--- начало «' + f.name + '» ---\n' +
+                    f.text + '\n' +
+                    '--- конец «' + f.name + '» ---'
+                );
+            });
+
+            const unreadable = attachedFiles.filter(f => !f.text);
+            if (unreadable.length) {
+                const names = unreadable.map(f => f.name).join(', ');
+                parts.push('[Пользователь прикрепил файлы, содержимое которых недоступно текстовой модели: ' + names + ']');
+            }
+
+            // Вопрос пользователя ставим последним — так модель отвечает именно на него
+            if (typedText) {
+                parts.push('Вопрос пользователя: ' + typedText);
+            }
+
+            return parts.join('\n\n').trim();
+        }
+        // ===== Конец модуля вложений =====
+
+
+        // ===== Умная авто-прокрутка =====
+        // Тянем вниз только если пользователь находится у нижнего края.
+        let autoScroll = true;
+        let lastScrollTop = 0;
+        const SCROLL_THRESHOLD = 80; // px от низа, в пределах которых считаем, что пользователь "внизу"
+
+        function isNearBottom() {
+            return messagesEl.scrollHeight - messagesEl.scrollTop - messagesEl.clientHeight <= SCROLL_THRESHOLD;
+        }
+
+        // Колесо вверх — самый частый случай на десктопе, реагируем мгновенно
+        messagesEl.addEventListener('wheel', (e) => {
+            if (e.deltaY < 0) {
+                autoScroll = false;
+            } else if (isNearBottom()) {
+                autoScroll = true;
+            }
+        }, { passive: true });
+
+        // Тач: если ушли от низа — отключаем
+        messagesEl.addEventListener('touchmove', () => {
+            if (!isNearBottom()) autoScroll = false;
+        }, { passive: true });
+
+        // Любая прокрутка вверх (в т.ч. перетаскивание ползунка) отключает авто-прокрутку,
+        // у самого низа — снова включает. Программная прокрутка идёт только вниз, поэтому
+        // сама себя не отключает.
+        messagesEl.addEventListener('scroll', () => {
+            const st = messagesEl.scrollTop;
+            if (st < lastScrollTop - 2) {
+                autoScroll = false;
+            } else if (isNearBottom()) {
+                autoScroll = true;
+            }
+            lastScrollTop = st;
+        });
+
+        function scrollToBottomIfNeeded() {
+            if (autoScroll) {
+                messagesEl.scrollTop = messagesEl.scrollHeight;
+                lastScrollTop = messagesEl.scrollTop;
+            }
+        }
+
+        function forceScrollToBottom() {
+            autoScroll = true;
+            messagesEl.scrollTop = messagesEl.scrollHeight;
+            lastScrollTop = messagesEl.scrollTop;
+        }
+
         function removeWelcome() {
             const welcome = document.querySelector('.welcome-message');
             if (welcome) welcome.remove();
         }
 
-        function addMessage(content, role) {
+        // Иконки для кнопки копирования
+        const copyIconSvg = '<svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>';
+        const checkIconSvg = '<svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>';
+
+        // Копирование текста ответа в буфер обмена
+        async function copyMessage(text, btn) {
+            try {
+                await navigator.clipboard.writeText(text);
+            } catch (e) {
+                // Фолбэк для старых браузеров и небезопасного контекста (http)
+                const ta = document.createElement('textarea');
+                ta.value = text;
+                ta.style.position = 'fixed';
+                ta.style.top = '-9999px';
+                ta.style.opacity = '0';
+                document.body.appendChild(ta);
+                ta.focus();
+                ta.select();
+                try { document.execCommand('copy'); } catch (err) {}
+                document.body.removeChild(ta);
+            }
+
+            const t = translations[currentLang];
+            btn.classList.add('copied');
+            btn.innerHTML = checkIconSvg + '<span>' + t.copied + '</span>';
+
+            clearTimeout(btn._copyTimer);
+            btn._copyTimer = setTimeout(() => {
+                btn.classList.remove('copied');
+                btn.innerHTML = copyIconSvg + '<span>' + translations[currentLang].copy + '</span>';
+            }, 2000);
+        }
+
+        // Добавляет панель действий с кнопкой "Копировать" под ответом бота
+        function addCopyButton(group, rawContent) {
+            const contentDiv = group.querySelector('.message-content');
+            if (!contentDiv || contentDiv.querySelector('.message-actions')) return;
+
+            const t = translations[currentLang];
+            const actions = document.createElement('div');
+            actions.className = 'message-actions';
+
+            const btn = document.createElement('button');
+            btn.type = 'button';
+            btn.className = 'copy-btn';
+            btn.title = t.copy;
+            btn.innerHTML = copyIconSvg + '<span>' + t.copy + '</span>';
+            btn.addEventListener('click', () => copyMessage(rawContent, btn));
+
+            actions.appendChild(btn);
+            contentDiv.appendChild(actions);
+        }
+
+        function addMessage(content, role, attachments = null) {
             removeWelcome();
             
             const group = document.createElement('div');
@@ -877,14 +1535,48 @@
                 text.textContent = content;
             }
             
+            // Вложения пользователя (превью изображений и чипы документов)
+            if (role === 'user' && attachments && attachments.length) {
+                contentDiv.appendChild(buildMessageAttachments(attachments));
+            }
+
             contentDiv.appendChild(text);
             group.appendChild(avatar);
             group.appendChild(contentDiv);
             
             messagesEl.appendChild(group);
-            messagesEl.scrollTop = messagesEl.scrollHeight;
+            scrollToBottomIfNeeded();
+
+            // Кнопка копирования для готовых ответов бота (история диалогов)
+            if (role === 'bot') {
+                addCopyButton(group, content);
+            }
             
             return group;
+        }
+
+        // Строит блок вложений внутри сообщения пользователя
+        function buildMessageAttachments(attachments) {
+            const wrap = document.createElement('div');
+            wrap.className = 'message-attachments';
+            attachments.forEach(a => {
+                if (a.kind === 'image' && a.dataUrl) {
+                    const img = document.createElement('img');
+                    img.className = 'msg-att-img';
+                    img.src = a.dataUrl;
+                    img.alt = a.name;
+                    wrap.appendChild(img);
+                } else {
+                    const el = document.createElement('div');
+                    el.className = 'msg-att';
+                    el.innerHTML = '<svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8l-6-6z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" d="M14 2v6h6"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" d="M9 13h6M9 17h6"/></svg>';
+                    const span = document.createElement('span');
+                    span.textContent = a.name;
+                    el.appendChild(span);
+                    wrap.appendChild(el);
+                }
+            });
+            return wrap;
         }
 
 	// Функция для превращения ссылок в кликабельные
@@ -907,14 +1599,9 @@
                 return div.innerHTML;
             };
             
+            // Единственное место HTML-экранирования: текст от ИИ превращаем
+            // в безопасный HTML здесь, перед разметкой markdown.
             let formatted = escapeHtml(text);
-            
-            // Заменяем HTML entities на обычные символы для читаемости
-            formatted = formatted.replace(/&quot;/g, '"');
-            formatted = formatted.replace(/&amp;/g, '&');
-            formatted = formatted.replace(/&lt;/g, '<');
-            formatted = formatted.replace(/&gt;/g, '>');
-            formatted = formatted.replace(/&apos;/g, "'");
             
             // ВАЖНО: Заменяем переносы строк на <br> ДО обработки markdown
             formatted = formatted.replace(/\n/g, '<br>');
@@ -1022,15 +1709,20 @@
                         }
                         
                         charIndex++;
-                        messagesEl.scrollTop = messagesEl.scrollHeight;
+                        scrollToBottomIfNeeded();
                         setTimeout(typeHTML, speed);
+                    } else {
+                        // Печать завершена — гарантируем полный текст и добавляем кнопку "Копировать"
+                        text.innerHTML = formattedHTML;
+                        addCopyButton(group, content);
+                        scrollToBottomIfNeeded();
                     }
                 }
                 
                 typeHTML();
             } else {
                 text.textContent = content;
-                messagesEl.scrollTop = messagesEl.scrollHeight;
+                scrollToBottomIfNeeded();
             }
             
             return group;
@@ -1060,7 +1752,7 @@
             group.appendChild(contentDiv);
             
             messagesEl.appendChild(group);
-            messagesEl.scrollTop = messagesEl.scrollHeight;
+            scrollToBottomIfNeeded();
         }
 
         function hideTyping() {
@@ -1068,8 +1760,20 @@
             if (typing) typing.remove();
         }
 
-        async function sendMessage(text) {
-            addMessage(text, 'user');
+        async function sendMessage(messageToSend, displayText, attachments) {
+            displayText = (displayText !== undefined && displayText !== null) ? displayText : messageToSend;
+            attachments = attachments || [];
+
+            // Текст для истории — без громоздкого содержимого документов
+            let historyText = displayText;
+            if (attachments.length) {
+                const names = attachments.map(a => a.name).join(', ');
+                historyText = (displayText ? displayText + ' ' : '') + '📎 ' + names;
+            }
+
+            addMessage(displayText, 'user', attachments);
+            // Пользователь только что отправил сообщение — возвращаемся вниз
+            forceScrollToBottom();
             showTyping();
             
             input.disabled = true;
@@ -1084,42 +1788,55 @@
                         'Accept': 'application/json'
                     },
                     body: JSON.stringify({
-                        message: text,
+                        message: messageToSend,
                         parent_message_id: lastMessageId
                     })
                 });
 
-		 // Проверяем что ответ валидный
-                if (!response.ok) {
-		    // Если ошибка 419 (CSRF token expired) - автоматически обновляем страницу
-                    if (response.status === 419) {
-                        hideTyping();
-                        addMessage('Сессия истекла. Обновляю страницу...', 'error');
-                        setTimeout(() => {
-                            window.location.reload();
-                        }, 1500);
-                        return;
-                    }
-                    throw new Error(`Сервер вернул ошибку: ${response.status}`);
-                }
-                
-                // Проверяем что это JSON
-                const contentType = response.headers.get('content-type');
-                if (!contentType || !contentType.includes('application/json')) {
-                    throw new Error('Сервер вернул неправильный формат ответа');
+		 // Обработка истёкшей сессии (CSRF) до разбора тела
+                if (response.status === 419) {
+                    hideTyping();
+                    addMessage('Сессия истекла. Обновляю страницу...', 'error');
+                    setTimeout(() => {
+                        window.location.reload();
+                    }, 1500);
+                    return;
                 }
 
-                const data = await response.json();
+                // Пытаемся разобрать JSON-тело в любом случае (там лежит текст ошибки)
+                let data = null;
+                const contentType = response.headers.get('content-type') || '';
+                if (contentType.includes('application/json')) {
+                    data = await response.json();
+                }
+
                 hideTyping();
 
-                if (data.success) {
+                if (response.ok && data && data.success) {
                     addMessageWithTyping(data.message, 'bot');
                     lastMessageId = data.id;
-                    
+
                     // СОХРАНЯЕМ РАЗГОВОР СРАЗУ ПОСЛЕ ПОЛУЧЕНИЯ ОТВЕТА
-                    saveConversation(text, data.message);
+                    saveConversation(historyText, data.message);
                 } else {
-                    addMessage('Ошибка: ' + (data.error || 'Не удалось получить ответ'), 'error');
+                    // Формируем понятное сообщение об ошибке
+                    let errorMsg = (data && data.error)
+                        ? data.error
+                        : `Сервер вернул ошибку: ${response.status}`;
+
+                    // Технические детали показываем только если их прислал сервер (APP_DEBUG)
+                    if (data && data.debug) {
+                        if (data.debug.upstream_status) {
+                            errorMsg += `\n\n[debug] Код API: ${data.debug.upstream_status}`;
+                            if (data.debug.upstream_message) {
+                                errorMsg += ` — ${data.debug.upstream_message}`;
+                            }
+                        } else if (data.debug.detail) {
+                            errorMsg += `\n\n[debug] ${data.debug.detail}`;
+                        }
+                    }
+
+                    addMessage(errorMsg, 'error');
                 }
 
             } catch (err) {
@@ -1146,11 +1863,25 @@
 
         form.addEventListener('submit', (e) => {
             e.preventDefault();
-            const text = input.value.trim();
-            if (!text) return;
+            const typed = input.value.trim();
+            if (!typed && attachedFiles.length === 0) return;
+
+            // Не отправляем, пока распознаётся текст из вложений
+            if (attachedFiles.some(f => f.processing)) {
+                alert('Подождите, идёт распознавание текста из вложения…');
+                return;
+            }
+
+            const composed = buildComposedMessage(typed);
+            const meta = attachedFiles.map(f => ({
+                name: f.name, kind: f.kind, dataUrl: f.dataUrl, warn: f.warn
+            }));
+
             input.value = '';
             input.style.height = 'auto';
-            sendMessage(text);
+            clearAttachments();
+
+            sendMessage(composed, typed, meta);
         });
 
         input.addEventListener('keydown', (e) => {
@@ -1205,6 +1936,12 @@
             if (conv) {
                 conv.messages.push({ role: 'user', content: question });
                 conv.messages.push({ role: 'bot', content: answer });
+
+                // Сохраняем якорь цепочки диалога для контекста Timeweb API.
+                // parent_message_id восстановится при загрузке диалога,
+                // чтобы агент продолжал беседу с учётом контекста.
+                conv.lastMessageId = lastMessageId;
+
                 localStorage.setItem('conversations', JSON.stringify(conversations));
                 
                 // Сохраняем ID текущего диалога
@@ -1222,12 +1959,19 @@
             
             // Сохраняем ID текущего диалога в localStorage
             localStorage.setItem('lastConversationId', id);
+
+            // Восстанавливаем якорь цепочки, чтобы продолжение диалога
+            // сохраняло контекст на стороне Timeweb API
+            lastMessageId = conv.lastMessageId || null;
             
             messagesEl.innerHTML = '';
 
             conv.messages.forEach(msg => {
                 addMessage(msg.content, msg.role);
             });
+
+            // Открыли диалог — показываем последнее сообщение
+            forceScrollToBottom();
 
             // Mark as active
             document.querySelectorAll('.history-item').forEach(item => {
@@ -1367,6 +2111,15 @@
 	    // Update user avatars in all messages
             document.querySelectorAll('.message-group.user .message-avatar').forEach(avatar => {
                 avatar.textContent = t.you;
+            });
+
+            // Update copy buttons that are not in "copied" state
+            document.querySelectorAll('.copy-btn').forEach(btn => {
+                btn.title = t.copy;
+                if (!btn.classList.contains('copied')) {
+                    const span = btn.querySelector('span');
+                    if (span) span.textContent = t.copy;
+                }
             });
 
             // Update language button
