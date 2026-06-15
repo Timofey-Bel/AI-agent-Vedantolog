@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>Vedantolog AI - Ведический AI Помощник | Ведическая Астрология и Знания</title>
-    <meta name="description" content="Vedantolog AI - ваш личный помощник в мире ведической астрологии, джйотиш и ведических знаний. Получите ответы на вопросы о карме, судьбе, натальной карте и духовном развитии от AI-консультанта.">
-    <meta name="keywords" content="ведическая астрология, джйотиш, ведантолог, AI астролог, ведические знания, натальная карта, гороскоп, карма, судьба, духовное развитие, веды, астрология онлайн, консультация астролога, ведический AI, астрология чат, vedantolog, vedantolog AI, ведантолог, ведантолог ии">
+    <title>Vedantolog AI - Ведический AI Помощник</title>
+    <meta name="description" content="Vedantolog AI - ваш личный помощник в мире ведическом знании ">
+    <meta name="keywords" content="ведическая, джйотиш, ведантолог, ведические знания, натальная карта, гороскоп, карма, судьба, духовное развитие, веды, ведический AI, чат, vedantolog, vedantolog AI, ведантолог, ведантолог ии">
     <meta name="author" content="Vedantolog">
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://ai.vedantolog.org">
@@ -15,18 +15,26 @@
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://ai.vedantolog.org">
     <meta property="og:title" content="Vedantolog AI - Ведический AI Помощник">
-    <meta property="og:description" content="Получите ответы на вопросы о ведической астрологии, карме и духовном развитии от AI-консультанта">
+    <meta property="og:description" content="Ведический AI-помощник: ответы по ведической философии и культуре">
     <meta property="og:image" content="{{ asset('vedantolog-icon-white-bg-new.jpg') }}">
     
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
     <meta property="twitter:url" content="https://ai.vedantolog.org">
     <meta property="twitter:title" content="Vedantolog AI - Ведический AI Помощник">
-    <meta property="twitter:description" content="Получите ответы на вопросы о ведической астрологии, карме и духовном развитии от AI-консультанта">
+    <meta property="twitter:description" content="Ведический AI-помощник: ответы по ведической философии и культуре">
     <meta property="twitter:image" content="{{ asset('vedantolog-icon-white-bg-new.jpg') }}">
-    <link rel="icon" type="image/png" href="{{ asset('favicon.png') }}">
-    <link rel="shortcut icon" type="image/png" href="{{ asset('favicon.png') }}">
-    <link rel="apple-touch-icon" href="{{ asset('favicon.png') }}">
+    <link rel="icon" type="image/png" href="{{ asset('favicon.png') }}?v=2">
+    <link rel="shortcut icon" type="image/png" href="{{ asset('favicon.png') }}?v=2">
+    <link rel="apple-touch-icon" href="{{ asset('favicon.png') }}?v=2">
+
+    <!-- PWA -->
+    <link rel="manifest" href="/manifest.json?v=2">
+    <meta name="theme-color" content="#0a0a0a">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Vedantolog AI">
     <style>
         * { 
             box-sizing: border-box; 
@@ -88,17 +96,12 @@
             height: 100%;
         }
 
-        .sidebar-logo-text {
-            font-size: 16px;
-            font-weight: 600;
-            color: rgb(0 144 216);
-        }
-
 	.lang-btn {
             display: flex;
             align-items: center;
             gap: 6px;
             padding: 8px 12px;
+            height: 38px;
             background: #1a1a1a;
             border: 1px solid #2a2a2a;
             border-radius: 8px;
@@ -107,7 +110,7 @@
             font-weight: 600;
             cursor: pointer;
             transition: all 0.2s;
-    	    margin-left: 17px;
+    	    margin-left: auto;
         }
 
         .lang-btn:hover {
@@ -118,6 +121,32 @@
 
         .lang-btn svg {
             flex-shrink: 0;
+        }
+
+        .theme-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 38px;
+            height: 38px;
+            background: #1a1a1a;
+            border: 1px solid #2a2a2a;
+            border-radius: 8px;
+            color: #999;
+            cursor: pointer;
+            transition: all 0.2s;
+            flex-shrink: 0;
+        }
+
+        .theme-btn:hover {
+            background: #2a2a2a;
+            border-color: rgb(0 144 216);
+            color: rgb(0 144 216);
+        }
+
+        .theme-btn svg {
+            width: 18px;
+            height: 18px;
         }
 
         .new-chat-btn {
@@ -140,6 +169,33 @@
         .new-chat-btn:hover {
             transform: translateY(-2px);
             box-shadow: 0 4px 12px rgba(0, 212, 170, 0.3);
+        }
+
+        .install-btn {
+            width: 100%;
+            margin-top: 10px;
+            padding: 11px 16px;
+            background: transparent;
+            border: 1px solid rgb(0 144 216);
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            color: rgb(0 144 216);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: all 0.2s;
+        }
+
+        .install-btn:hover {
+            background: rgba(0, 144, 216, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .install-btn svg {
+            flex-shrink: 0;
         }
 
         .sidebar-content {
@@ -295,6 +351,18 @@
             font-size: 16px;
             font-weight: 600;
             color: rgb(0 144 216);
+        }
+
+        .chat-title .brand-name {
+            color: #ffffff;
+        }
+
+        .chat-version {
+            font-size: 11px;
+            font-weight: 600;
+            color: #888;
+            vertical-align: super;
+            margin-left: 2px;
         }
 
 	.home-btn {
@@ -499,8 +567,19 @@
         }
 
         .message-group.typing .message-text {
-            color: #666;
             font-style: italic;
+            background: linear-gradient(90deg, #5a5a5a 30%, #bdecfb 50%, #5a5a5a 70%);
+            background-size: 200% 100%;
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            color: transparent;
+            animation: textShimmer 3.2s ease-in-out infinite;
+        }
+
+        @keyframes textShimmer {
+            0% { background-position: 150% 0; }
+            100% { background-position: -150% 0; }
         }
 
         .message-group.error .message-text {
@@ -681,6 +760,16 @@
             height: 20px;
         }
 
+        .chat-input button.stop-mode {
+            background: #ff4444;
+            color: #fff;
+        }
+
+        .chat-input button.stop-mode:hover:not(:disabled) {
+            background: #ff5e5e;
+            box-shadow: 0 4px 12px rgba(255, 68, 68, 0.3);
+        }
+
         .attach-btn {
             background: transparent !important;
             color: #999 !important;
@@ -760,7 +849,7 @@
         }
 
         .attachment-chip .att-meta.warn {
-            color: #d9a441;
+            color: #f5b301;
         }
 
         .attachment-chip .att-remove {
@@ -833,7 +922,26 @@
             cursor: pointer;
             align-items: center;
             justify-content: center;
+            flex-direction: column;
             color: rgb(0 144 216);
+            transition: background 0.2s ease, border-color 0.2s ease, transform 0.3s ease;
+        }
+
+        .sidebar-toggle .bar {
+            display: block;
+            width: 20px;
+            height: 2px;
+            border-radius: 2px;
+            background: currentColor;
+        }
+
+        .sidebar-toggle .bar + .bar {
+            margin-top: 5px;
+        }
+
+        /* При открытом меню полоски становятся вертикальными */
+        .sidebar-toggle.active {
+            transform: rotate(90deg);
         }
 
         .sidebar-overlay {
@@ -916,9 +1024,215 @@
                 font-size: 14px;
             }
         }
+
+        /* ===== Светлая тема ===== */
+        body.light-theme {
+            background: #f4f5f7;
+            color: #1a1a1a;
+        }
+
+        body.light-theme .chat-container {
+            background: #f9fafb;
+        }
+
+        body.light-theme .sidebar {
+            background: #ffffff;
+            border-right-color: #e6e8eb;
+        }
+
+        body.light-theme .sidebar-header {
+            border-bottom-color: #e6e8eb;
+        }
+
+        body.light-theme .lang-btn,
+        body.light-theme .theme-btn,
+        body.light-theme .home-btn,
+        body.light-theme .sidebar-toggle {
+            background: #ffffff;
+            border-color: #d7dadf;
+            color: #555;
+        }
+
+        body.light-theme .install-btn {
+            background: #ffffff;
+        }
+
+        body.light-theme .lang-btn:hover,
+        body.light-theme .theme-btn:hover,
+        body.light-theme .home-btn:hover,
+        body.light-theme .sidebar-toggle:hover {
+            background: #eef0f3;
+            border-color: rgb(0 144 216);
+            color: rgb(0 144 216);
+        }
+
+        body.light-theme .home-btn {
+            color: rgb(0 144 216);
+        }
+
+        body.light-theme .sidebar-content::-webkit-scrollbar-thumb,
+        body.light-theme .chat-messages::-webkit-scrollbar-thumb,
+        body.light-theme .chat-input textarea::-webkit-scrollbar-thumb {
+            background: #cfd3d8;
+        }
+
+        body.light-theme .history-title {
+            color: #8a8f98;
+        }
+
+        body.light-theme .history-item-content {
+            color: #555;
+        }
+
+        body.light-theme .history-item:hover .history-item-content {
+            background: #eef0f3;
+            color: #111;
+        }
+
+        body.light-theme .history-item.active .history-item-content {
+            background: #e3f2fb;
+            color: rgb(0 144 216);
+        }
+
+        body.light-theme .history-item-delete {
+            color: #999;
+        }
+
+        body.light-theme .chat-header {
+            background: #ffffff;
+            border-bottom-color: #e6e8eb;
+        }
+
+        body.light-theme .chat-title .brand-name {
+            color: #1a1a1a;
+        }
+
+        body.light-theme .chat-version {
+            color: #8a8f98;
+        }
+
+        body.light-theme .message-text {
+            color: #2a2a2a;
+        }
+
+        body.light-theme .message-text strong,
+        body.light-theme .message-text h3 {
+            color: #000;
+        }
+
+        body.light-theme .message-text em {
+            color: #333;
+        }
+
+        body.light-theme .message-text code {
+            background: #eef0f3;
+            border-color: #d7dadf;
+            color: #0077b6;
+        }
+
+        body.light-theme .message-text blockquote {
+            color: #555;
+        }
+
+        body.light-theme .message-group.user .message-avatar {
+            background: #e3f2fb;
+            color: rgb(0 144 216);
+        }
+
+        body.light-theme .welcome-message {
+            color: #8a8f98;
+        }
+
+        body.light-theme .message-group.typing .message-text {
+            background: linear-gradient(90deg, #9aa0a6 30%, #0090d8 50%, #9aa0a6 70%);
+            background-size: 200% 100%;
+            -webkit-background-clip: text;
+            background-clip: text;
+        }
+
+        body.light-theme .welcome-message p {
+            color: #666;
+        }
+
+        body.light-theme .chat-input-wrapper {
+            background: #ffffff;
+            border-top-color: #e6e8eb;
+        }
+
+        body.light-theme .chat-input {
+            background: #f4f5f7;
+            border-color: #d7dadf;
+        }
+
+        body.light-theme .chat-input textarea {
+            color: #1a1a1a;
+        }
+
+        body.light-theme .chat-input textarea::placeholder {
+            color: #999;
+        }
+
+        body.light-theme .attach-btn {
+            background: #ffffff !important;
+            border-color: #d7dadf !important;
+            color: #777 !important;
+        }
+
+        body.light-theme .attach-btn:hover:not(:disabled) {
+            color: rgb(0 144 216) !important;
+            border-color: rgb(0 144 216) !important;
+        }
+
+        body.light-theme .attachment-chip,
+        body.light-theme .message-attachments .msg-att {
+            background: #ffffff;
+            border-color: #d7dadf;
+        }
+
+        body.light-theme .attachment-chip .att-icon {
+            background: #eef0f3;
+        }
+
+        body.light-theme .attachment-chip .att-name {
+            color: #1a1a1a;
+        }
+
+        body.light-theme .attachment-chip .att-meta {
+            color: #8a8f98;
+        }
+
+        body.light-theme .attachment-chip .att-meta.warn {
+            color: #d99300;
+        }
+
+        body.light-theme .attachment-chip .att-remove {
+            background: #e6e8eb;
+            color: #555;
+        }
+
+        body.light-theme .message-attachments .msg-att {
+            color: #333;
+        }
+
+        body.light-theme .copy-btn {
+            border-color: #d7dadf;
+            color: #777;
+        }
+
+        body.light-theme .copy-btn:hover {
+            background: #eef0f3;
+            border-color: rgb(0 144 216);
+            color: rgb(0 144 216);
+        }
     </style>
 </head>
 <body>
+    <script>
+        // Применяем тему как можно раньше, чтобы избежать мигания тёмной темы
+        if ((localStorage.getItem('theme') || 'dark') === 'light') {
+            document.body.classList.add('light-theme');
+        }
+    </script>
     <div class="app-container">
         <!-- Sidebar -->
         <div class="sidebar" id="sidebar">
@@ -927,19 +1241,25 @@
                     <div class="sidebar-logo-icon">
                         <img src="{{ asset('vedantolog-icon-white-bg.png') }}" alt="Vedantolog" style="width: 100%; height: 100%; object-fit: contain;">
                     </div>
-                    <div class="sidebar-logo-text">VEDANTOLOG</div>
 		    <button class="lang-btn" onclick="toggleLanguage()" title="Switch language">
                         <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129"/>
                         </svg>
                         <span id="langTextSidebar">EN</span>
                     </button>
+                    <button class="theme-btn" id="themeBtn" onclick="toggleTheme()" title="Сменить тему"></button>
                 </div>
                 <button class="new-chat-btn" onclick="startNewChat()">
                     <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
                     </svg>
                     <span data-translate="newChat">Новый диалог</span>
+                </button>
+                <button class="install-btn" id="installBtn" onclick="handleInstallClick()" style="display:none;">
+                    <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v12m0 0l-4-4m4 4l4-4M4 17v2a2 2 0 002 2h12a2 2 0 002-2v-2"/>
+                    </svg>
+                    <span data-translate="install">Установить приложение</span>
                 </button>
             </div>
             <div class="sidebar-content" id="historyList">
@@ -951,10 +1271,10 @@
         <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
 
         <!-- Mobile toggle -->
-        <button class="sidebar-toggle" onclick="toggleSidebar()">
-            <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
-            </svg>
+        <button class="sidebar-toggle" id="sidebarToggle" onclick="toggleSidebar()" aria-label="Меню">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
         </button>
 
         <!-- Main Chat -->
@@ -964,13 +1284,13 @@
                     <div class="chat-logo">
                         <img src="{{ asset('vedantolog-icon-white-bg.png') }}" alt="Vedantolog AI" style="width: 100%; height: 100%; object-fit: contain;">
                     </div>
-                    <div class="chat-title">Vedantolog AI</div>
+                    <div class="chat-title"><span class="brand-name">Vedantolog</span> AI <span class="chat-version">v3.0</span></div>
                 </div>
 		<a href="https://vedantolog.org" class="home-btn" target="_blank">
                     <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
                     </svg>
-                    <span data-translate="home">На главную</span>
+                    <span data-translate="home">Домой</span>
                 </a>
             </div>
 
@@ -1011,13 +1331,12 @@
         </div>
     </div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/mammoth@1.6.0/mammoth.browser.min.js"></script>
+    <script src="/js/pdf.min.js"></script>
+    <script src="/js/mammoth.browser.min.js"></script>
     <script>
         // Настройка воркера pdf.js (используется для извлечения текста из PDF)
         if (window.pdfjsLib) {
-            window.pdfjsLib.GlobalWorkerOptions.workerSrc =
-                'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+            window.pdfjsLib.GlobalWorkerOptions.workerSrc = '/js/pdf.worker.min.js';
         }
 
         const messagesEl = document.getElementById('messages');
@@ -1039,6 +1358,7 @@
             ru: {
                 home: 'На главную',
                 newChat: 'Новый диалог',
+                install: 'Установить приложение',
                 today: 'Сегодня',
                 yesterday: 'Вчера',
                 earlier: 'Ранее',
@@ -1054,6 +1374,7 @@
             en: {
                 home: 'Home',
                 newChat: 'New Chat',
+                install: 'Install app',
                 today: 'Today',
                 yesterday: 'Yesterday',
                 earlier: 'Earlier',
@@ -1070,6 +1391,27 @@
 
 
         let currentLang = localStorage.getItem('lang') || 'ru';
+        let currentTheme = localStorage.getItem('theme') || 'dark';
+
+        // Иконки темы: в тёмной теме показываем солнце (переключиться на светлую), в светлой — луну
+        const sunIcon = '<svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/></svg>';
+        const moonIcon = '<svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/></svg>';
+
+        function applyTheme(theme) {
+            if (theme === 'light') {
+                document.body.classList.add('light-theme');
+            } else {
+                document.body.classList.remove('light-theme');
+            }
+            const btn = document.getElementById('themeBtn');
+            if (btn) btn.innerHTML = theme === 'light' ? moonIcon : sunIcon;
+        }
+
+        function toggleTheme() {
+            currentTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            localStorage.setItem('theme', currentTheme);
+            applyTheme(currentTheme);
+        }
 
         // Auto-resize textarea
         input.addEventListener('input', function() {
@@ -1212,6 +1554,7 @@
         async function ensureMammoth() {
             if (window.mammoth) return;
             const sources = [
+                '/js/mammoth.browser.min.js',
                 'https://cdn.jsdelivr.net/npm/mammoth@1.6.0/mammoth.browser.min.js',
                 'https://unpkg.com/mammoth@1.6.0/mammoth.browser.min.js',
                 'https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js'
@@ -1579,15 +1922,6 @@
             return wrap;
         }
 
-	// Функция для превращения ссылок в кликабельные
-        function linkifyText(text) {
-            // Регулярное выражение для поиска URL
-            const urlRegex = /(https?:\/\/[^\s]+)/g;
-            return text.replace(urlRegex, function(url) {
-                return `<a href="${url}" target="_blank" rel="noopener noreferrer" style="color: rgb(0 144 216); text-decoration: underline;">${url}</a>`;
-            });
-        }
-
         // Функция для обработки Markdown-форматирования
         function formatMarkdown(text) {
             if (!text) return '';
@@ -1654,7 +1988,7 @@
         }
 
 	// Функция для плавного появления текста с эффектом печати
-        function addMessageWithTyping(content, role) {
+        function addMessageWithTyping(content, role, onDone) {
             removeWelcome();
             
             const group = document.createElement('div');
@@ -1685,6 +2019,7 @@
             if (role === 'bot') {
                 // Форматируем весь текст сразу
                 const formattedHTML = formatMarkdown(content);
+                typingStopped = false;
                 
                 // Создаем временный элемент для парсинга HTML
                 const tempDiv = document.createElement('div');
@@ -1694,8 +2029,20 @@
                 let currentHTML = '';
                 let charIndex = 0;
                 const speed = 5; // Ускоренная печать (5мс на символ)
+
+                function finishTyping(full) {
+                    // full=true — показываем весь текст; иначе оставляем напечатанное (остановка)
+                    text.innerHTML = full ? formattedHTML : (currentHTML || formattedHTML);
+                    addCopyButton(group, content);
+                    scrollToBottomIfNeeded();
+                    if (typeof onDone === 'function') onDone();
+                }
                 
                 function typeHTML() {
+                    if (typingStopped) {
+                        finishTyping(false);
+                        return;
+                    }
                     if (charIndex < formattedHTML.length) {
                         currentHTML += formattedHTML.charAt(charIndex);
                         
@@ -1712,10 +2059,8 @@
                         scrollToBottomIfNeeded();
                         setTimeout(typeHTML, speed);
                     } else {
-                        // Печать завершена — гарантируем полный текст и добавляем кнопку "Копировать"
-                        text.innerHTML = formattedHTML;
-                        addCopyButton(group, content);
-                        scrollToBottomIfNeeded();
+                        // Печать завершена — показываем полный текст и кнопку «Копировать»
+                        finishTyping(true);
                     }
                 }
                 
@@ -1723,6 +2068,7 @@
             } else {
                 text.textContent = content;
                 scrollToBottomIfNeeded();
+                if (typeof onDone === 'function') onDone();
             }
             
             return group;
@@ -1760,6 +2106,41 @@
             if (typing) typing.remove();
         }
 
+        // ===== Управление генерацией / кнопка «Стоп» =====
+        let abortController = null;
+        let typingStopped = false;
+        let isGenerating = false;
+
+        const sendIconSvg = '<svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/></svg>';
+        const stopIconSvg = '<svg fill="currentColor" viewBox="0 0 24 24"><rect x="6" y="6" width="12" height="12" rx="2"/></svg>';
+
+        function setGenerating(on) {
+            isGenerating = on;
+            if (on) {
+                sendBtn.innerHTML = stopIconSvg;
+                sendBtn.classList.add('stop-mode');
+                sendBtn.disabled = false;
+                sendBtn.title = 'Остановить';
+                input.disabled = true;
+            } else {
+                sendBtn.innerHTML = sendIconSvg;
+                sendBtn.classList.remove('stop-mode');
+                sendBtn.title = '';
+                input.disabled = false;
+                input.focus();
+            }
+        }
+
+        function stopGeneration() {
+            typingStopped = true;          // остановит анимацию печати
+            if (abortController) {          // прервёт запрос, если он ещё идёт
+                abortController.abort();
+                abortController = null;
+            }
+            hideTyping();
+            setGenerating(false);
+        }
+
         async function sendMessage(messageToSend, displayText, attachments) {
             displayText = (displayText !== undefined && displayText !== null) ? displayText : messageToSend;
             attachments = attachments || [];
@@ -1775,9 +2156,8 @@
             // Пользователь только что отправил сообщение — возвращаемся вниз
             forceScrollToBottom();
             showTyping();
-            
-            input.disabled = true;
-            sendBtn.disabled = true;
+            setGenerating(true);
+            abortController = new AbortController();
 
             try {
                 const response = await fetch('/api/chat', {
@@ -1790,7 +2170,8 @@
                     body: JSON.stringify({
                         message: messageToSend,
                         parent_message_id: lastMessageId
-                    })
+                    }),
+                    signal: abortController.signal
                 });
 
 		 // Обработка истёкшей сессии (CSRF) до разбора тела
@@ -1813,8 +2194,9 @@
                 hideTyping();
 
                 if (response.ok && data && data.success) {
-                    addMessageWithTyping(data.message, 'bot');
                     lastMessageId = data.id;
+                    // Печать ответа; по завершении или остановке выключаем режим генерации
+                    addMessageWithTyping(data.message, 'bot', () => setGenerating(false));
 
                     // СОХРАНЯЕМ РАЗГОВОР СРАЗУ ПОСЛЕ ПОЛУЧЕНИЯ ОТВЕТА
                     saveConversation(historyText, data.message);
@@ -1837,10 +2219,18 @@
                     }
 
                     addMessage(errorMsg, 'error');
+                    setGenerating(false);
                 }
 
             } catch (err) {
                 hideTyping();
+
+                // Пользователь нажал «Стоп» — это не ошибка
+                if (err.name === 'AbortError') {
+                    setGenerating(false);
+                    return;
+                }
+
                 let errorMsg = 'Ошибка соединения';
                 
                 if (err.message.includes('JSON')) {
@@ -1853,16 +2243,22 @@
                 
                 addMessage(errorMsg, 'error');
                 console.error('Ошибка:', err);
+                setGenerating(false);
             } finally {
-                input.disabled = false;
-                sendBtn.disabled = false;
+                abortController = null;
                 input.style.height = 'auto';
-                input.focus();
             }
         }
 
         form.addEventListener('submit', (e) => {
             e.preventDefault();
+
+            // Если идёт генерация — кнопка работает как «Стоп»
+            if (isGenerating) {
+                stopGeneration();
+                return;
+            }
+
             const typed = input.value.trim();
             if (!typed && attachedFiles.length === 0) return;
 
@@ -1895,8 +2291,11 @@
         function toggleSidebar() {
             const sidebar = document.getElementById('sidebar');
             const overlay = document.getElementById('sidebarOverlay');
-            sidebar.classList.toggle('open');
-            overlay.classList.toggle('show');
+            const toggle = document.getElementById('sidebarToggle');
+            const willOpen = !sidebar.classList.contains('open');
+            sidebar.classList.toggle('open', willOpen);
+            overlay.classList.toggle('show', willOpen);
+            if (toggle) toggle.classList.toggle('active', willOpen);
         }
 
         function startNewChat() {
@@ -2133,7 +2532,57 @@
             renderHistory(); // Перерисовать историю с новым языком
         }
 
+        // ===== PWA: установка на главный экран =====
+        let deferredPrompt = null;
+        const installBtn = document.getElementById('installBtn');
+
+        function isIosDevice() {
+            return /iphone|ipad|ipod/i.test(navigator.userAgent);
+        }
+
+        function isStandalone() {
+            return window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
+        }
+
+        // Android/Chrome: ловим событие и показываем кнопку
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            if (installBtn && !isStandalone()) installBtn.style.display = 'flex';
+        });
+
+        window.addEventListener('appinstalled', () => {
+            deferredPrompt = null;
+            if (installBtn) installBtn.style.display = 'none';
+        });
+
+        async function handleInstallClick() {
+            if (deferredPrompt) {
+                deferredPrompt.prompt();
+                const choice = await deferredPrompt.userChoice;
+                deferredPrompt = null;
+                if (choice.outcome === 'accepted' && installBtn) installBtn.style.display = 'none';
+            } else if (isIosDevice()) {
+                alert('Чтобы добавить на главный экран в Safari:\n\n1. Нажмите кнопку «Поделиться» (квадрат со стрелкой вверх) внизу экрана.\n2. Выберите «На экран «Домой».\n3. Нажмите «Добавить».');
+            } else {
+                alert('Откройте меню браузера и выберите «Установить приложение» или «Добавить на главный экран».');
+            }
+        }
+
+        // iOS не поддерживает beforeinstallprompt — показываем кнопку с инструкцией вручную
+        if (isIosDevice() && !isStandalone() && installBtn) {
+            installBtn.style.display = 'flex';
+        }
+
+        // Регистрация service worker (необходима для установки PWA)
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js').catch(() => {});
+            });
+        }
+
         // Initialize
+        applyTheme(currentTheme);
         translatePage();
         renderHistory();
         
