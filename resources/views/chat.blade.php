@@ -770,6 +770,53 @@
             box-shadow: 0 4px 12px rgba(255, 68, 68, 0.3);
         }
 
+        /* Кнопка микрофона (голосовой ввод) наследует ghost-стиль от .attach-btn.
+           В режиме записи — красная с пульсацией. */
+        .mic-btn.listening {
+            color: #ff4444 !important;
+            border-color: #ff4444 !important;
+            animation: micPulse 1.4s ease-in-out infinite;
+        }
+
+        @keyframes micPulse {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(255, 68, 68, 0.5); }
+            50% { box-shadow: 0 0 0 6px rgba(255, 68, 68, 0); }
+        }
+
+        /* Кнопка «Прослушать» в активном состоянии (идёт озвучка) */
+        .listen-btn.playing {
+            color: rgb(0 144 216);
+            border-color: rgb(0 144 216);
+        }
+
+        /* Ненавязчивая подсказка (тост) для статуса микрофона */
+        .mic-hint {
+            position: fixed;
+            left: 50%;
+            bottom: 96px;
+            transform: translateX(-50%) translateY(12px);
+            max-width: 90%;
+            width: max-content;
+            background: #2a2a2a;
+            color: #fff;
+            border: 1px solid #3a3a3a;
+            border-radius: 10px;
+            padding: 12px 16px;
+            font-size: 14px;
+            line-height: 1.45;
+            text-align: center;
+            z-index: 200;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.25s ease, transform 0.25s ease;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+        }
+
+        .mic-hint.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+
         .attach-btn {
             background: transparent !important;
             color: #999 !important;
@@ -1313,6 +1360,14 @@
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13"/>
                                 </svg>
                             </button>
+                            {{-- Кнопка микрофона временно скрыта: Web Speech API недоступен в браузерах на iPhone (ошибка service-not-allowed). Вернуть, когда подключим облачное распознавание.
+                            <button type="button" id="micBtn" class="attach-btn mic-btn" title="Голосовой ввод">
+                                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 1a3 3 0 00-3 3v8a3 3 0 006 0V4a3 3 0 00-3-3z"/>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 10v2a7 7 0 01-14 0v-2M12 19v4M8 23h8"/>
+                                </svg>
+                            </button>
+                            --}}
                             <textarea 
                                 id="userInput" 
                                 placeholder="Напишите ваш вопрос..." 
@@ -1347,6 +1402,7 @@
         const fileInput = document.getElementById('fileInput');
         const attachBtn = document.getElementById('attachBtn');
         const attachmentsPreview = document.getElementById('attachmentsPreview');
+        const micBtn = document.getElementById('micBtn');
 
         const csrfToken = document.querySelector('meta[name="csrf-token"]').content;
         let lastMessageId = null;
@@ -1369,7 +1425,14 @@
                 typing: 'Печатаю ответ...',
                 you: 'Вы',
                 copy: 'Копировать',
-                copied: 'Скопировано'
+                copied: 'Скопировано',
+                voiceInput: 'Голосовой ввод',
+                voiceStop: 'Остановить запись',
+                listen: 'Прослушать',
+                listenStop: 'Остановить',
+                micDenied: 'Чтобы говорить, разрешите доступ к микрофону в окне браузера. Если ранее вы нажали «Блокировать», нажмите на значок микрофона (или замка) слева в адресной строке и выберите «Разрешить».',
+                micUnsupported: 'Голосовой ввод не поддерживается в этом браузере. Откройте сайт в Chrome, Edge или Safari.',
+                micUnavailable: 'Голосовой ввод недоступен в этом браузере. На iPhone откройте сайт в Safari и включите диктовку (Настройки → Основные → Клавиатура → «Включить диктовку»). На компьютере используйте Chrome или Edge.'
             },
             en: {
                 home: 'Home',
@@ -1385,7 +1448,14 @@
                 typing: 'Typing response...',
                 you: 'You',
                 copy: 'Copy',
-                copied: 'Copied'
+                copied: 'Copied',
+                voiceInput: 'Voice input',
+                voiceStop: 'Stop recording',
+                listen: 'Listen',
+                listenStop: 'Stop',
+                micDenied: 'To use voice input, allow microphone access in the browser prompt. If you previously clicked "Block", click the microphone (or lock) icon in the address bar and choose "Allow".',
+                micUnsupported: 'Voice input is not supported in this browser. Open the site in Chrome, Edge or Safari.',
+                micUnavailable: 'Voice input is unavailable in this browser. On iPhone open the site in Safari and enable Dictation (Settings → General → Keyboard → Enable Dictation). On desktop use Chrome or Edge.'
             }
         };
 
@@ -1846,6 +1916,18 @@
             btn.addEventListener('click', () => copyMessage(rawContent, btn));
 
             actions.appendChild(btn);
+
+            // Кнопка «Прослушать» (синтез речи) — только если браузер умеет
+            if ('speechSynthesis' in window) {
+                const listenBtn = document.createElement('button');
+                listenBtn.type = 'button';
+                listenBtn.className = 'copy-btn listen-btn';
+                listenBtn.title = t.listen;
+                listenBtn.innerHTML = speakIconSvg + '<span>' + t.listen + '</span>';
+                listenBtn.addEventListener('click', () => toggleSpeak(rawContent, listenBtn));
+                actions.appendChild(listenBtn);
+            }
+
             contentDiv.appendChild(actions);
         }
 
@@ -2122,11 +2204,14 @@
                 sendBtn.disabled = false;
                 sendBtn.title = 'Остановить';
                 input.disabled = true;
+                stopRecognition();              // не диктуем во время генерации
+                if (micBtn) micBtn.disabled = true;
             } else {
                 sendBtn.innerHTML = sendIconSvg;
                 sendBtn.classList.remove('stop-mode');
                 sendBtn.title = '';
                 input.disabled = false;
+                if (micBtn) micBtn.disabled = false;
                 input.focus();
             }
         }
@@ -2258,6 +2343,8 @@
                 stopGeneration();
                 return;
             }
+
+            stopRecognition();  // фиксируем продиктованный текст перед отправкой
 
             const typed = input.value.trim();
             if (!typed && attachedFiles.length === 0) return;
@@ -2523,6 +2610,17 @@
 
             // Update language button
             document.getElementById('langTextSidebar').textContent = currentLang === 'ru' ? 'EN' : 'RU';
+
+            // Голосовой ввод: подпись/тултип микрофона
+            updateMicUI();
+
+            // Кнопки «Прослушать» под ответами
+            document.querySelectorAll('.listen-btn').forEach(btn => {
+                const label = btn.classList.contains('playing') ? t.listenStop : t.listen;
+                btn.title = label;
+                const span = btn.querySelector('span');
+                if (span) span.textContent = label;
+            });
         }
 
         function toggleLanguage() {
@@ -2580,6 +2678,206 @@
                 navigator.serviceWorker.register('/sw.js').catch(() => {});
             });
         }
+
+        // ===== Голосовой ввод (Web Speech API: SpeechRecognition) =====
+        const SpeechRecognitionCtor = window.SpeechRecognition || window.webkitSpeechRecognition;
+        let recognition = null;
+        let recognizing = false;
+        let recBaseText = '';   // текст, который был в поле до начала диктовки
+        let recFinal = '';      // накопленный финальный результат текущей сессии
+
+        // Ненавязчивая подсказка вместо блокирующего alert. На iOS повторные alert
+        // приводят к предложению «заблокировать диалоговые окна» — поэтому используем тост.
+        let micHintTimer = null;
+        function showMicHint(text) {
+            let el = document.getElementById('micHint');
+            if (!el) {
+                el = document.createElement('div');
+                el.id = 'micHint';
+                el.className = 'mic-hint';
+                document.body.appendChild(el);
+            }
+            el.textContent = text;
+            requestAnimationFrame(() => el.classList.add('show'));
+            clearTimeout(micHintTimer);
+            micHintTimer = setTimeout(() => el.classList.remove('show'), 5000);
+        }
+
+        function updateMicUI() {
+            if (!micBtn) return;
+            if (recognizing) {
+                micBtn.classList.add('listening');
+                micBtn.title = translations[currentLang].voiceStop;
+            } else {
+                micBtn.classList.remove('listening');
+                micBtn.title = translations[currentLang].voiceInput;
+            }
+        }
+
+        function createRecognition() {
+            const r = new SpeechRecognitionCtor();
+            r.continuous = !isIosDevice();  // на iOS непрерывный режим работает нестабильно
+            r.interimResults = true;
+
+            r.onstart = () => { recognizing = true; updateMicUI(); };
+
+            r.onresult = (e) => {
+                let interim = '';
+                for (let i = e.resultIndex; i < e.results.length; i++) {
+                    const seg = e.results[i][0].transcript;
+                    if (e.results[i].isFinal) {
+                        recFinal += seg;
+                        if (!/\s$/.test(recFinal)) recFinal += ' ';
+                    } else {
+                        interim += seg;
+                    }
+                }
+                let composed = recBaseText;
+                if (composed && !/\s$/.test(composed)) composed += ' ';
+                composed += recFinal + interim;
+                input.value = composed;
+                input.dispatchEvent(new Event('input')); // пересчёт высоты textarea
+            };
+
+            r.onerror = (e) => {
+                recognizing = false;
+                updateMicUI();
+                // Транзиентные ошибки игнорируем — никаких всплывающих окон
+                if (e.error === 'no-speech' || e.error === 'aborted' || e.error === 'audio-capture') return;
+                if (e.error === 'not-allowed') {
+                    // Пользователь явно запретил доступ к микрофону
+                    showMicHint(translations[currentLang].micDenied);
+                } else if (e.error === 'service-not-allowed') {
+                    // Браузер/ОС не предоставляет речевой сервис (типично для браузеров на iPhone).
+                    // Кнопка в этом браузере работать не будет — убираем её и поясняем.
+                    if (micBtn) micBtn.style.display = 'none';
+                    showMicHint(translations[currentLang].micUnavailable);
+                } else if (e.error === 'network') {
+                    // Chromium-форк без речевого бэкенда Google (Opera, Яндекс) — кнопка бесполезна
+                    if (micBtn) micBtn.style.display = 'none';
+                    showMicHint(translations[currentLang].micUnsupported);
+                } else {
+                    showMicHint(translations[currentLang].micUnavailable);
+                }
+            };
+
+            r.onend = () => {
+                recognizing = false;
+                updateMicUI();
+                input.focus();
+            };
+
+            return r;
+        }
+
+        function startRecognition() {
+            if (!SpeechRecognitionCtor || recognizing) return;
+            // start() вызываем синхронно прямо в обработчике клика — иначе на iOS Safari
+            // теряется «жест пользователя» и распознавание падает в service-not-allowed.
+            // Разрешение на микрофон браузер запросит сам при первом запуске.
+            if (!recognition) recognition = createRecognition();
+            recognition.lang = currentLang === 'en' ? 'en-US' : 'ru-RU';
+            recBaseText = input.value.trim();
+            recFinal = '';
+            stopSpeaking();   // не слушаем и не озвучиваем одновременно
+            try {
+                recognition.start();
+            } catch (err) {
+                // start() во время уже активной сессии бросает InvalidStateError — игнорируем
+            }
+        }
+
+        function stopRecognition() {
+            if (recognition && recognizing) {
+                try { recognition.stop(); } catch (err) {}
+            }
+        }
+
+        function toggleRecognition() {
+            if (recognizing) stopRecognition();
+            else startRecognition();
+        }
+
+        if (micBtn) {
+            if (SpeechRecognitionCtor) {
+                micBtn.addEventListener('click', toggleRecognition);
+            } else {
+                // Firefox и другие без распознавания — прячем кнопку
+                micBtn.style.display = 'none';
+            }
+        }
+
+        // ===== Озвучка ответов (Web Speech API: speechSynthesis) =====
+        const speakIconSvg = '<svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5L6 9H2v6h4l5 4V5z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.54 8.46a5 5 0 010 7.07M19.07 4.93a10 10 0 010 14.14"/></svg>';
+        let speakingBtn = null;
+        let speakResumeTimer = null;
+
+        // Убираем markdown-разметку, чтобы синтезатор не зачитывал символы вроде * и #
+        function plainTextForSpeech(md) {
+            if (!md) return '';
+            let s = md;
+            s = s.replace(/\[([^\]]+)\]\((https?:\/\/[^)]+)\)/g, '$1'); // [текст](url) -> текст
+            s = s.replace(/[*_~`#>]/g, ' ');
+            s = s.replace(/^\s*[-•]\s*/gm, '');
+            s = s.replace(/\s{2,}/g, ' ').trim();
+            return s;
+        }
+
+        function resetListenBtn(btn) {
+            if (!btn) return;
+            btn.classList.remove('playing');
+            const label = translations[currentLang].listen;
+            btn.title = label;
+            btn.innerHTML = speakIconSvg + '<span>' + label + '</span>';
+        }
+
+        function setListenBtnPlaying(btn) {
+            btn.classList.add('playing');
+            const label = translations[currentLang].listenStop;
+            btn.title = label;
+            btn.innerHTML = stopIconSvg + '<span>' + label + '</span>';
+        }
+
+        function stopSpeaking() {
+            if (speakResumeTimer) { clearInterval(speakResumeTimer); speakResumeTimer = null; }
+            if ('speechSynthesis' in window) window.speechSynthesis.cancel();
+            if (speakingBtn) { resetListenBtn(speakingBtn); speakingBtn = null; }
+        }
+
+        function toggleSpeak(rawText, btn) {
+            if (!('speechSynthesis' in window)) return;
+            const synth = window.speechSynthesis;
+
+            // Повторный клик по той же кнопке — стоп
+            if (speakingBtn === btn) { stopSpeaking(); return; }
+
+            // Останавливаем предыдущую озвучку (если играла другая кнопка)
+            stopSpeaking();
+
+            const u = new SpeechSynthesisUtterance(plainTextForSpeech(rawText));
+            u.lang = currentLang === 'en' ? 'en-US' : 'ru-RU';
+            u.onend = () => {
+                if (speakResumeTimer) { clearInterval(speakResumeTimer); speakResumeTimer = null; }
+                resetListenBtn(btn);
+                if (speakingBtn === btn) speakingBtn = null;
+            };
+            u.onerror = u.onend;
+
+            speakingBtn = btn;
+            setListenBtnPlaying(btn);
+            synth.speak(u);
+
+            // Обход бага Chrome: длинная речь обрывается ~через 15 сек без pause/resume
+            speakResumeTimer = setInterval(() => {
+                if (!synth.speaking) { clearInterval(speakResumeTimer); speakResumeTimer = null; return; }
+                synth.pause(); synth.resume();
+            }, 10000);
+        }
+
+        // Останавливаем озвучку при уходе со страницы
+        window.addEventListener('beforeunload', () => {
+            if ('speechSynthesis' in window) window.speechSynthesis.cancel();
+        });
 
         // Initialize
         applyTheme(currentTheme);
