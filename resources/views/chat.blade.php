@@ -2385,6 +2385,18 @@
             if (toggle) toggle.classList.toggle('active', willOpen);
         }
 
+        // Закрывает боковое меню. На мобильных сайдбар — это оверлей поверх чата,
+        // поэтому после выбора/создания диалога его нужно закрыть, чтобы было видно
+        // поле ввода. На десктопе класс .open ни на что не влияет — вызов безопасен.
+        function closeSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('sidebarOverlay');
+            const toggle = document.getElementById('sidebarToggle');
+            sidebar.classList.remove('open');
+            overlay.classList.remove('show');
+            if (toggle) toggle.classList.remove('active');
+        }
+
         function startNewChat() {
             currentConversationId = null;
             lastMessageId = null;
@@ -2398,6 +2410,10 @@
                     <p>Vedantolog AI  — это первый в мире комплекс моделей искусственного интеллекта, которые обучаются под руководством опытных экспертов в области ведического знания. Его миссия — сделать так, чтобы каждый искренний искатель истины мог получить доступ к полному объёму ведического знания и его носителям</p>
                 </div>
             `;
+
+            // На мобильных закрываем меню, чтобы было видно чат и поле ввода
+            closeSidebar();
+
             input.focus();
             
             // Remove active class from all history items
@@ -2458,6 +2474,9 @@
 
             // Открыли диалог — показываем последнее сообщение
             forceScrollToBottom();
+
+            // На мобильных закрываем меню, чтобы показать сам диалог
+            closeSidebar();
 
             // Mark as active
             document.querySelectorAll('.history-item').forEach(item => {
